@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta charset="utf8" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.2.47/vue.global.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="index.less" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/less.js/4.1.3/less.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <span
+          v-for="i in Object.keys(ma)"
+          class="taxon"
+          :class="{chosen:i==chosen}"
+          @click="click(i)"
+          >{{i}}</span
+        >
+      </div>
+      <div class="imagelist">
+        <div v-for="i in current" :key="i.latin" class="life">
+          <img :src="'./species400/speciesImages/'+i.latin+'.jpg'" />
+          <div class="name">{{i.name}}</div>
+          <div class="latin">{{i.latin}}</div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          ma: {},
+          current: [],
+          chosen: "",
+        };
+      },
+      methods: {
+        click(taxon) {
+          this.chosen = taxon;
+          this.current = this.ma[taxon];
+        },
+      },
+      mounted() {
+        axios.get("./species400/meta.json").then((resp) => {
+          const ma = {};
+          for (let x of resp.data) {
+            if (!ma[x.taxon]) {
+              ma[x.taxon] = [];
+            }
+            ma[x.taxon].push(x);
+          }
+          const ks = Object.keys(ma);
+          this.chosen = ks[0];
+          current = ma[this.chosen];
+          this.ma = ma;
+          this.current = current;
+        });
+      },
+    }).mount("#app");
+  </script>
+</html>

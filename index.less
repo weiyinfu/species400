@@ -1,0 +1,46 @@
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#app {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  position: fixed;
+  padding: 10px;
+  background: white;
+}
+.taxon {
+  border: 1px solid black;
+  padding: 4px;
+  cursor: pointer;
+  margin: 10px;
+  &.chosen {
+    color: red;
+    font-weight: bold;
+  }
+}
+.imagelist {
+  margin-top: 60px;
+}
+.life {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 400px;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .latin {
+    font-size: 10px;
+  }
+}
